@@ -1,0 +1,31 @@
+{
+  "_middleware": [
+    {
+      "target": "all",
+      "action": [
+        "../middlewares/session#use"
+      ]
+    },
+    {
+      "target": ["/authenticate"],
+      "action": [
+        "../middlewares/alreadyConnected#use"
+      ]
+    },
+    {
+      "target": ["/user"],
+      "action": [
+        "../middlewares/authorization#run"
+      ]
+    }
+  ],
+  "/authenticate": {
+    "post": "AuthenticateController#connect"
+  },
+  "/logout": {
+    "get": "AuthenticateController#disconnect"
+  },
+  "/user": {
+    "get": "UserController#get"
+  }
+}
