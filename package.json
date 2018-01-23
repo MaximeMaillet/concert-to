@@ -1,0 +1,30 @@
+{
+  "name": "concert-to",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MaximeMaillet/concert-to.git"
+  },
+  "keywords": [
+    "concert"
+  ],
+  "author": "Maxime Maillet <maxime.maillet93@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaximeMaillet/concert-to/issues"
+  },
+  "homepage": "https://github.com/MaximeMaillet/concert-to#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-imp-router": "^0.1.0",
+    "express-session": "^1.15.6",
+    "sequelize": "^4.32.1"
+  }
+}
