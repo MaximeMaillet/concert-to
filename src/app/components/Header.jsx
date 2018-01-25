@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 
+import HeaderTitle from '../styledComponent/HeaderTitle.jsx';
+
 export default class Header extends Component {
   render() {
     return (
       <header>
         <div className="logo">
           <img src="" />
-          <h1>Concert To</h1>
+          <HeaderTitle>Concert To</HeaderTitle>
         </div>
       </header>
     );

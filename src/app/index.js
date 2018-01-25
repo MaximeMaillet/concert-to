@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './assets/layout.scss';
+import 'bootstrap';
+import './assets/styles/layout.scss';
+import './assets/styles/forms.scss';
+
 import Homepage from './containers/Homepage.jsx';
 
 ReactDOM.render(
