@@ -23,8 +23,25 @@ const config = {
         test: /\.scss$/,
         use: ['css-hot-loader'].concat(ExtractTextWebpackPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
+          use: [
+            'css-loader',
+            'sass-loader',
+            {
+              loader: 'sass-resources-loader',
+              options: {
+                resources: './src/app/assets/styles/variables.scss'
+              },
+            }
+          ],
         }))
+      },
+      {
+        test: /\.(svg)$/,
+        loader: 'file-loader?name=img/img-[hash:6].[ext]',
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=public/fonts/[name].[ext]'
       }
     ]
   },

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 
-import Header from '../components/Header.jsx';
-import RegisterForm from '../components/Forms/RegisterForm.jsx';
-import LoginForm from '../components/Forms/LoginForm.jsx';
+import RegisterForm from './RegisterForm/RegisterForm.jsx';
+import LoginForm from './LoginForm/LoginForm.jsx';
+import Navbar from './Navbar/Navbar.jsx';
 
 export default class Homepage extends Component {
   render() {
     return(
       <div>
-        <Header/>
+        <Navbar />
         <div className="container-fluid">
           <div className="row">
             <div className="col-xl-6">
