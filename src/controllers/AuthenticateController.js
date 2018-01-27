@@ -1,12 +1,19 @@
-'use strict';
+const User = require('../models').user;
 
-module.exports.connect = (req, res, next) => {
-  console.log(req.session);
-  req.session.user = {
-    name: req.body.username,
-  };
-  console.log(req.session);
-  res.send(req.session.user);
+module.exports.connect = async(req, res, next) => {
+
+  try {
+    const user = await User.create({
+      email: req.body.username,
+      password: req.body.password,
+      username: req.body.username,
+    });
+
+    res.send(user);
+  }
+  catch(err) {
+    next(err);
+  }
 };
 
 module.exports.disconnect = (req, res, next) => {

@@ -25,6 +25,7 @@
   "homepage": "https://github.com/MaximeMaillet/concert-to#readme",
   "dependencies": {
     "axios": "^0.17.1",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
     "cookie-session": "^2.0.0-beta.3",
@@ -35,6 +36,7 @@
     "express-imp-router": "^0.1.1",
     "express-session": "^1.15.6",
     "jquery": "^3.3.1",
+    "mysql2": "^1.5.1",
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-cookie": "^2.1.2",
@@ -44,6 +46,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.2.1",
     "sequelize": "^4.32.1",
+    "sequelize-cli": "^3.2.0",
     "session-file-store": "^1.2.0",
     "styled-components": "^3.0.2",
     "tiny-emitter": "^2.0.2",

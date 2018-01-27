@@ -1,15 +1,21 @@
 {
-  "_middleware": [
+  "_middlewares": [
+    {
+      "target": "*",
+      "action": ["cors#use"]
+    },
     {
       "target": ["/authenticate", "/user"],
       "action": [
-        "../middlewares/cors#use",
-        "../middlewares/session#use"
+        "session#use"
       ]
     }
   ],
   "/authenticate": {
-    "post": "AuthenticateController#connect"
+    "post": {
+      "controller": "AuthenticateController#connect",
+      "errorHandler": "database"
+    }
   },
   "/logout": {
     "get": "AuthenticateController#disconnect"
