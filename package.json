@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "front:dev": "webpack-dev-server -d --hot --config=./src/config/webpack.config.js --watch",
     "front:prod": "NODE_ENV=production webpack --config=./src/config/webpack.config.js --progress",
-    "back:dev": "node index.js -v",
+    "back:dev": "./node_modules/.bin/nodemon --config daemon.json",
     "back:prod": "node index.js"
   },
   "repository": {
