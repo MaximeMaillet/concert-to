@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { withCookies, Cookies } from 'react-cookie';
+import {toastr} from 'react-redux-toastr'
 
-import RegisterForm from './RegisterForm/RegisterForm.jsx';
-import LoginForm from './LoginForm/LoginForm.jsx';
-import Navbar from './Navbar/Navbar.jsx';
+import RegisterForm from '../RegisterForm/RegisterForm.jsx';
+import LoginForm from '../LoginForm/LoginForm.jsx';
+import Navbar from '../Navbar/Navbar.jsx';
 
-import api from '../lib/api.js';
+import api from '../../lib/api.js';
 
 class Homepage extends Component {
   constructor(props) {
@@ -25,6 +26,14 @@ class Homepage extends Component {
     // console.log(cookies.get('sessionID'));
   }
 
+  success = (val) => {
+    toastr.success('Good', 'Your registration is OK!');
+  };
+
+  fail = (err) => {
+    toastr.error('Error', err.message);
+  }
+
   render() {
     return(
       <div>
@@ -33,7 +42,7 @@ class Homepage extends Component {
           <div className="row">
             <div className="col-xl-6">
               <a href="#" onClick={this.click}>CLICK</a>
-              <RegisterForm/>
+              <RegisterForm onSubmitSuccess={this.success} onSubmitFail={this.fail} />
             </div>
             <div className="col-xl-6">
               <LoginForm/>

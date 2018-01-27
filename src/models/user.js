@@ -14,25 +14,44 @@ module.exports = function(sequelize, DataTypes) {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: {
+          args: true,
+          msg: 'Your email is already in use'
+        },
+        defaultValue: '',
         validate: {
+          notEmpty: {
+            msg: 'Email is required'
+          },
           isEmail: {
             args: true,
             msg: 'Your email is invalid'
           },
-          notEmpty: true,
         }
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: '',
         validate: {
-          notEmpty: true,
+          notEmpty: {
+            msg: 'Password is required'
+          },
+          min: {
+            args: 5,
+            msg: 'You should have password with 5 chars. minimum'
+          }
         }
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: '',
+        validate: {
+          notEmpty: {
+            msg: 'User name is required'
+          }
+        }
       },
     },
     {

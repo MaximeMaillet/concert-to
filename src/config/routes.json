@@ -5,7 +5,7 @@
       "action": ["cors#use"]
     },
     {
-      "target": ["/authenticate", "/user"],
+      "target": ["/authenticate", "/registration", "/user"],
       "action": [
         "session#use"
       ]
@@ -14,6 +14,12 @@
   "/authenticate": {
     "post": {
       "controller": "AuthenticateController#connect",
+      "errorHandler": "database"
+    }
+  },
+  "/registration": {
+    "post": {
+      "controller": "AuthenticateController#registration",
       "errorHandler": "database"
     }
   },

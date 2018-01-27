@@ -36,4 +36,4 @@ function parseRoute(route, config) {
   }
 }
 
-module.exports = calls;
+export default calls;
