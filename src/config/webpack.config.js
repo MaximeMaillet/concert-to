@@ -1,3 +1,4 @@
+require('dotenv').config();
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
@@ -51,7 +52,11 @@ const config = {
       template: './public/index.html',
       filename: 'index.html',
       inject: 'body'
-    })
+    }),
+    new webpack.DefinePlugin({
+      'API_URL': JSON.stringify(process.env.API_URL),
+      'API_PORT': JSON.stringify(process.env.API_PORT),
+    }),
   ],
   devServer: {
     contentBase: path.resolve(__dirname, './public'),

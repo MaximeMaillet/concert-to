@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { CookiesProvider } from 'react-cookie';
 
 import 'bootstrap';
 import './assets/styles/layout.scss';
@@ -17,7 +18,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Homepage/>
+    <CookiesProvider>
+      <Homepage/>
+    </CookiesProvider>
   </Provider>,
   document.getElementById('root')
 );

@@ -1,21 +1,10 @@
 {
   "_middleware": [
     {
-      "target": "all",
+      "target": ["/authenticate", "/user"],
       "action": [
+        "../middlewares/cors#use",
         "../middlewares/session#use"
-      ]
-    },
-    {
-      "target": ["/authenticate"],
-      "action": [
-        "../middlewares/alreadyConnected#use"
-      ]
-    },
-    {
-      "target": ["/user"],
-      "action": [
-        "../middlewares/authorization#run"
       ]
     }
   ],

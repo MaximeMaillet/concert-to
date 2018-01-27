@@ -1,15 +1,11 @@
 'use strict';
 
-const user = [
-  {name: 'Max', id: 1},
-  {name: 'Jo', id: 2},
-  {name: 'Alfred', id: 3},
-];
-
 module.exports.connect = (req, res, next) => {
-  const i = Math.floor(Math.random() * 2);
-  console.log(i);
-  req.session.user = user[i];
+  console.log(req.session);
+  req.session.user = {
+    name: req.body.username,
+  };
+  console.log(req.session);
   res.send(req.session.user);
 };
 

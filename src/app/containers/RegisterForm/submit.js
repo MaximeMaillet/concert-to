@@ -1,3 +1,5 @@
+import api from '../../lib/api.js';
+
 export default (values) => {
-  console.log(values);
+  api.registration(values);
 };
