@@ -4,7 +4,7 @@ async function connect(req, res, next) {
   const {email, password} = req.body;
 
   try {
-    const user = await User
+    const user = (await User
       .findOne({where: {email}})
       .then((user) => {
 
@@ -14,7 +14,7 @@ async function connect(req, res, next) {
         else {
           return user;
         }
-      });
+      })).dataValues;
 
     delete user.password;
     req.session.user = user;
