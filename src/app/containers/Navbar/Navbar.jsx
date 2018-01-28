@@ -6,9 +6,13 @@ import actions from '../User/actions.js';
 import {toastr} from 'react-redux-toastr';
 import { withCookies } from 'react-cookie';
 
-import Main from './components/Main.jsx';
 import LoginModal from '../../components/LoginModal/LoginModal.jsx';
 import RegisterModal from '../../components/RegisterModal/RegisterModal.jsx';
+import Accout from './components/Accout.jsx';
+import Login from './components/Login.jsx';
+
+import './components/header.scss';
+import logo from '../../assets/images/logo.svg';
 
 class Navbar extends Component {
 
@@ -95,12 +99,23 @@ class Navbar extends Component {
           onSubmitSuccess={this.registrationSuccess}
           onSubmitFail={this.failed}
         />
-        <Main
-          handleLogout={this.handleLogout}
-          handleLogin={this.handleLogin}
-          handleRegister={this.handleRegister}
-          {...this.props}
-        />
+        <header className={`${this.props.fixed ? 'fixed': ''}`}>
+          <div className="logo">
+            <img src={logo} alt="Concert To - Get your concert to world" className="pb-5" />
+          </div>
+          <div className="title">Concert To</div>
+          {(
+            this.props.isConnected &&
+            <Accout
+              handleLogout={this.handleLogout}
+              {...this.props}
+            />) ||
+          <Login
+            {...this.props}
+            handleLogin={this.handleLogin}
+            handleRegister={this.handleRegister}
+          />}
+        </header>
       </div>
     );
   }
