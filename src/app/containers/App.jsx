@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReduxToastr from 'react-redux-toastr';
 import { withCookies } from 'react-cookie';
+import { Router, Route } from 'react-router';
+import { push } from 'react-router-redux';
+
 import api from '../lib/api.js';
 import actions from './User/actions.js';
 
@@ -11,6 +14,7 @@ import '../assets/styles/layout.scss';
 
 import User from './User/User.jsx';
 import Homepage from './Homepage/Homepage.jsx';
+import About from './About/About.jsx';
 
 class App extends Component {
 
@@ -36,8 +40,10 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Route exact path="/" component={Homepage}/>
+        <Route exact path="/about" component={About}/>
+        {/*<Route path="/topics" component={Topics}/>*/}
         <User />
-        <Homepage />
         <ReduxToastr
           timeOut={4000}
           newestOnTop={false}

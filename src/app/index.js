@@ -9,19 +9,29 @@ import {reducer as toastrReducer} from 'react-redux-toastr';
 import App from './containers/App.jsx';
 import userReducers from './containers/User/reducer.js';
 
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
+const history = createHistory();
+
+// Build the middleware for intercepting and dispatching navigation actions
+const middleware = routerMiddleware(history);
+
 const store = createStore(
   combineReducers({
     form: formReducer,
     toastr: toastrReducer,
     authUser: userReducers,
+    router: routerReducer,
   }),
-  applyMiddleware(thunk)
+  applyMiddleware(thunk, middleware)
 );
 
 ReactDOM.render(
   <Provider store={store}>
     <CookiesProvider>
-      <App />
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
     </CookiesProvider>
   </Provider>,
   document.getElementById('root')

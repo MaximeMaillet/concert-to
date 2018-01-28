@@ -1,11 +1,11 @@
 {
   "_middlewares": [
     {
-      "target": "*",
+      "target": "init",
       "action": ["cors#use"]
     },
     {
-      "target": ["/authenticate", "/registration", "/user", "/logout"],
+      "target": "*",
       "action": [
         "session#use"
       ]
@@ -28,5 +28,11 @@
   },
   "/user": {
     "get": "UserController#get"
+  },
+  "/search": {
+    "post": {
+      "controller": "SearchController#artist",
+      "errorHandler": "database"
+    }
   }
 }

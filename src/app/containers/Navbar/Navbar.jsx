@@ -100,9 +100,9 @@ class Navbar extends Component {
           onSubmitFail={this.failed}
         />
         <header className={`${this.props.fixed ? 'fixed': ''}`}>
-          <div className="logo">
+          <a href="/" className="logo">
             <img src={logo} alt="Concert To - Get your concert to world" className="pb-5" />
-          </div>
+          </a>
           <div className="title">Concert To</div>
           {(
             this.props.isConnected &&
