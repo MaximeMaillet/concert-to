@@ -1,13 +1,27 @@
 const User = require('../models').user;
 
 async function connect(req, res, next) {
+  const {email, password} = req.body;
 
+  try {
+    const user = await User
+      .findOne({where: {email}})
+      .then((user) => {
 
-}
+        if (!user || !user.isValidPassword(user.password, password)) {
+          next({message:'Authenticate failed', status:401});
+        }
+        else {
+          return user;
+        }
+      });
 
-function disconnect(req, res, next) {
-  req.session.user = null;
-  res.sendStatus(200);
+    delete user.password;
+    req.session.user = user;
+    res.send(user);
+  } catch(err) {
+    next(err);
+  }
 }
 
 async function registration(req, res, next) {
@@ -18,6 +32,7 @@ async function registration(req, res, next) {
       username: req.body.username,
     });
 
+    delete user.password;
     req.session.user = user;
     res.send(user);
   }
@@ -26,8 +41,13 @@ async function registration(req, res, next) {
   }
 }
 
+function disconnect(req, res, next) {
+  req.session.user = null;
+  res.sendStatus(200);
+}
+
 module.exports = {
   connect,
-  disconnect,
   registration,
+  disconnect,
 };

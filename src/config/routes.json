@@ -5,7 +5,7 @@
       "action": ["cors#use"]
     },
     {
-      "target": ["/authenticate", "/registration", "/user"],
+      "target": ["/authenticate", "/registration", "/user", "/logout"],
       "action": [
         "session#use"
       ]

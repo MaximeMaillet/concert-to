@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports.get = (req, res, next) => {
-  // console.log(req.universalCookies.getAll());
-  // console.log(req.session);
-  // res.send(req.session.user);
-  res.send('ok');
+  if(!req.session || !req.session.user) {
+    return res.status(401).send();
+  }
+  res.send(req.session.user);
 };

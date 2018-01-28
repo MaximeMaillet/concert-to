@@ -15,14 +15,16 @@ function parseRoute(route, config) {
       } else {
         calls[route.replace(/\//g, '.').substr(1)] = (_params) => {
           let data = {};
-          if(key.toLowerCase() === 'get') {
-            data = {
-              params: _params
-            };
-          } else {
-            data = {
-              data: _params
-            };
+          if(_params) {
+            if(key.toLowerCase() === 'get') {
+              data = {
+                params: _params
+              };
+            } else {
+              data = {
+                data: _params
+              };
+            }
           }
 
           return axios.request(Object.assign({

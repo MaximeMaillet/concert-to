@@ -37,7 +37,7 @@ class Form extends Component {
             placeholder="User name"
           />
         </div>
-        <button type="submit" className="btn btn-secondary">Registration</button>
+        <button type="submit" className="btn btn-primary">Registration</button>
       </form>
     );
   }
