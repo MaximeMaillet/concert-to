@@ -55,7 +55,6 @@ const config = {
     }),
     new webpack.DefinePlugin({
       'API_URL': JSON.stringify(process.env.API_URL),
-      'API_PORT': JSON.stringify(process.env.API_PORT),
     }),
   ],
   devServer: {
@@ -69,6 +68,9 @@ const config = {
 };
 
 module.exports = config;
+
+console.log(`NODE_ENV : ${process.env.NODE_ENV}`);
+console.log(`API_URL : ${process.env.API_URL}`);
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.plugins.push(

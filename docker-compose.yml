@@ -1,4 +1,8 @@
 version: '3'
+
+volumes:
+  build:
+
 services:
   bd:
     image: mariadb:10.3
@@ -10,3 +14,64 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - ${STORAGE}/mariadb:/var/lib/mysql
+
+  redis:
+    image: redis:4.0.2
+    volumes:
+      - ${STORAGE}/redis:/data
+
+  mongodb:
+    image: mongo:3
+    volumes:
+      - ${STORAGE}/mongodb:/data/db
+
+  scrapper:
+    restart: always
+    image: deuxmax/concerto-scrapper:latest
+    ports:
+      - 8091:4001
+    environment:
+      REDIS_PORT: 6379
+      REDIS_HOST: redis
+      QUEUE_HOST_ID: Scrapper
+      QUEUE_NAME: global
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+    links:
+      - redis
+      - mongodb
+
+  app:
+    build:
+      context: .
+      args:
+        API_URL: http://localhost/api
+        API_PORT: 8088
+    environment:
+      CORS_DOMAIN: http://localhost,http://localhost:8082
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: concerto
+      MYSQL_PORT: 3306
+      MYSQL_CONNECTION_STRING: ${MYSQL_CONNECTION_STRING}
+      SCRAPPER_PORT: 8080
+      SCRAPPER_HOST: scrapper
+    volumes:
+      - ./sessions:/var/app/sessions
+      - build:/var/app/build
+    links:
+      - bd
+      - scrapper
+
+  nginx:
+    image: nginx:1.13
+    ports:
+      - 80:80
+    command: 'nginx -g "daemon off;"'
+    volumes:
+      - ./Docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./Docker/nginx/conf.d/prod.conf:/etc/nginx/conf.d/default.conf:ro
+      - build:/var/app/build
+    links:
+      - app

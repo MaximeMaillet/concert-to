@@ -11,28 +11,33 @@
       ]
     }
   ],
-  "/authenticate": {
-    "post": {
-      "controller": "AuthenticateController#connect",
-      "errorHandler": "database"
-    }
-  },
-  "/registration": {
-    "post": {
-      "controller": "AuthenticateController#registration",
-      "errorHandler": "database"
-    }
-  },
-  "/logout": {
-    "get": "AuthenticateController#disconnect"
-  },
-  "/user": {
-    "get": "UserController#get"
-  },
-  "/search": {
-    "post": {
-      "controller": "SearchController#artist",
-      "errorHandler": "database"
+  "/api": {
+    "/authenticate": {
+      "post": {
+        "controller": "AuthenticateController#connect",
+        "errorHandler": "database"
+      }
+    },
+    "/registration": {
+      "post": {
+        "controller": "AuthenticateController#registration",
+        "errorHandler": "database"
+      }
+    },
+    "/logout": {
+      "get": "AuthenticateController#disconnect"
+    },
+    "/user": {
+      "get": "UserController#get",
+      "/kikou": {
+        "get": "UserController#get"
+      }
+    },
+    "/search": {
+      "post": {
+        "controller": "SearchController#artist",
+        "errorHandler": "database"
+      }
     }
   }
 }

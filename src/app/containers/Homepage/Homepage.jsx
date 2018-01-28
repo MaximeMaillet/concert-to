@@ -23,6 +23,7 @@ class Homepage extends Component {
   };
 
   searchFail = (err) => {
+    console.log(err);
     toastr.info('', err.message);
     this.setState({artists: []});
   };
