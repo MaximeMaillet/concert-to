@@ -46,7 +46,7 @@ services:
         API_URL: /api
         API_PORT: 8090
     environment:
-      CORS_DOMAIN: http://localhost,http://localhost:8082 # @TODO
+      CORS_DOMAIN: http://concerto.deuxmax.fr
       MYSQL_DATABASE: concerto
       MYSQL_PORT: 3306
       MYSQL_CONNECTION_STRING: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@bd/${MYSQL_DATABASE}
