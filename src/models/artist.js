@@ -1,8 +1,3 @@
-'use strict';
-const Event = require('./event');
-
-const model = require('../models/index');
-
 module.exports = function(sequelize, DataTypes) {
   const Artist = sequelize.define('artist',
     {
@@ -22,7 +17,10 @@ module.exports = function(sequelize, DataTypes) {
           },
         }
       },
-
+      logo: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      }
     },
   );
 

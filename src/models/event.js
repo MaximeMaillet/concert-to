@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function(sequelize, DataTypes) {
   const Event = sequelize.define('event',
     {
@@ -15,6 +13,11 @@ module.exports = function(sequelize, DataTypes) {
         validate: {
           notNull: true,
         }
+      },
+      hash: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
       },
       date_start: {
         type: DataTypes.DATE,
