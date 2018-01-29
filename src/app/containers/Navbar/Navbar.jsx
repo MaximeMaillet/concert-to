@@ -10,6 +10,7 @@ import LoginModal from '../../components/LoginModal/LoginModal.jsx';
 import RegisterModal from '../../components/RegisterModal/RegisterModal.jsx';
 import Accout from './components/Accout.jsx';
 import Login from './components/Login.jsx';
+import Header from './components/Header.jsx';
 
 import './components/header.scss';
 import logo from '../../assets/images/logo.svg';
@@ -99,11 +100,7 @@ class Navbar extends Component {
           onSubmitSuccess={this.registrationSuccess}
           onSubmitFail={this.failed}
         />
-        <header className={`${this.props.fixed ? 'fixed': ''}`}>
-          <a href="/" className="logo">
-            <img src={logo} alt="Concert To - Get your concert to world" className="pb-5" />
-          </a>
-          <div className="title">Concert To</div>
+        <Header>
           {(
             this.props.isConnected &&
             <Accout
@@ -115,7 +112,7 @@ class Navbar extends Component {
             handleLogin={this.handleLogin}
             handleRegister={this.handleRegister}
           />}
-        </header>
+        </Header>
       </div>
     );
   }

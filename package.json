@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "front:dev": "webpack-dev-server -d --hot --config=./src/config/webpack.config.js --watch",
+    "front:dev": "webpack-dev-server -d --hot --config=./src/config/webpack.config.js --watch --host 0.0.0.0 --port 8091",
     "front:prod": "NODE_ENV=production webpack --config=./src/config/webpack.config.js",
     "back:dev": "./node_modules/.bin/nodemon --config daemon.json",
     "back:prod": "node index.js"

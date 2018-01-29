@@ -15,13 +15,22 @@ header {
     margin: 0 2vw 0 1vw;
   }
 
-  .title {
-    font-family: "Fantastic", serif;
-    font-size: 2.4em;
-    color: $primary;
-    font-weight: normal;
-    margin: 0;
-    padding: 0;
+  .title-group {
+    .title {
+      font-family: "Fantastic", serif;
+      font-size: 2.4em;
+      color: $primary;
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+    }
+
+    .subtitle {
+      margin: -10px 0 0 0.5rem;
+      color: $primary;
+      font-style: italic;
+      font-size: 0.8em;
+    }
   }
 
   .account, .login {

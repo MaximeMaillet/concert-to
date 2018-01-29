@@ -33,5 +33,5 @@ Router.route([
   }
 ]);
 
-console.log(process.env.API_PORT);
+console.log(`Api launch on ${process.env.API_PORT}`);
 app.listen(process.env.API_PORT);
