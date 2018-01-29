@@ -9,6 +9,10 @@
       "action": [
         "session#use"
       ]
+    },
+    {
+      "target": ["/api/user", "/api/search"],
+      "action": ["authorization#use"]
     }
   ],
   "/api": {
@@ -28,10 +32,7 @@
       "get": "AuthenticateController#disconnect"
     },
     "/user": {
-      "get": "UserController#get",
-      "/kikou": {
-        "get": "UserController#get"
-      }
+      "get": "UserController#get"
     },
     "/search": {
       "post": {
