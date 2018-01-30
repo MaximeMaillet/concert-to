@@ -1,0 +1,43 @@
+.cadre {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  flex-direction: column;
+  transition: opacity 500ms;
+
+  .step {
+    border: 1px solid $primary;
+    border-radius: 5px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    text-align: center;
+    align-items: center;
+    width: 80%;
+
+    &.search {
+      background-color: $primary-light;
+    }
+
+    &.wait {
+      background-color: $secondary;
+    }
+
+    &.enjoy {
+      background-color: $white;
+    }
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.link {
+  a {
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-size: 2em;
+  }
+}

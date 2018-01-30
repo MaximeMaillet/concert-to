@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReduxToastr from 'react-redux-toastr';
 import { withCookies } from 'react-cookie';
-import { Router, Route } from 'react-router';
-import { push } from 'react-router-redux';
+import { Route, withRouter } from 'react-router';
 
 import api from '../lib/api.js';
 import actions from './User/actions.js';
@@ -15,6 +14,9 @@ import '../assets/styles/layout.scss';
 import User from './User/User.jsx';
 import Homepage from './Homepage/Homepage.jsx';
 import About from './About/About.jsx';
+import Search from './Search/Search.jsx';
+import Navbar from './Navbar/Navbar.jsx';
+import Footer from './Footer/Footer.jsx';
 
 class App extends Component {
 
@@ -23,7 +25,7 @@ class App extends Component {
 
     const { cookies } = props;
 
-    if(cookies.get('connect.sid')) {
+    if(cookies.get('connect.sid') && !props.user) {
       this.props.startLoading();
       api.user()
         .then((response) => {
@@ -40,9 +42,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Route exact path="/" component={Homepage}/>
-        <Route exact path="/about" component={About}/>
-        {/*<Route path="/topics" component={Topics}/>*/}
+        <Navbar />
+          <Route exact path="/" component={Homepage}/>
+          <Route exact path="/search" component={Search}/>
+          <Route exact path="/about" component={About}/>
+        <Footer />
         <User />
         <ReduxToastr
           timeOut={4000}
@@ -58,10 +62,12 @@ class App extends Component {
 }
 
 export default withCookies(
-  connect(
-    (state) => ({
-      user: state.authUser.user,
-    }),
-    (dispatch) => bindActionCreators(actions, dispatch)
-  )(App)
+  withRouter(
+    connect(
+      (state) => ({
+        user: state.authUser.user,
+      }),
+      (dispatch) => bindActionCreators(actions, dispatch)
+    )(App)
+  )
 );

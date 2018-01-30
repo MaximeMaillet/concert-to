@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "front:dev": "webpack-dev-server -d --hot --config=./src/config/webpack.config.js --watch --host 0.0.0.0 --port 8091",
+    "front:dev": "webpack-dev-server -d --hot --config=./src/config/webpack.config.js --watch --host localhost --port 8091",
     "front:prod": "NODE_ENV=production webpack --config=./src/config/webpack.config.js",
     "back:dev": "./node_modules/.bin/nodemon --config daemon.json",
     "back:prod": "node index.js"
@@ -49,6 +49,7 @@
     "react-redux": "^5.0.6",
     "react-redux-toastr": "^7.2.0",
     "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-transition-group": "v2.3.0-beta.0",
     "reactstrap": "^5.0.0-alpha.3",

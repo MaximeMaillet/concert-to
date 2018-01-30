@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import ArtistCard from './components/ArtistCard.jsx';
+import ArtistCard from '../../../../components/ArtistCard/ArtistCard.jsx';
 
 class SearchResults extends Component {
   render() {

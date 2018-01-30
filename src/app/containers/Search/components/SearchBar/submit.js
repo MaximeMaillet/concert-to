@@ -1,5 +1,5 @@
 import { SubmissionError } from 'redux-form';
-import api from '../../lib/api.js';
+import api from '../../../../lib/api.js';
 
 export default (values) => {
   return api.search(values)

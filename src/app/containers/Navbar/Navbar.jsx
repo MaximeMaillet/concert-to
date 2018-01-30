@@ -75,7 +75,9 @@ class Navbar extends Component {
 
   loginSuccess = (response) => {
     this.toggleLogin();
+    const { cookies } = this.props;
     toastr.success('Good', 'You are connected');
+    console.log(cookies.get('connect.sid'));
     this.props.connect(response.data);
   };
 

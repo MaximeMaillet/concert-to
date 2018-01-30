@@ -11,8 +11,8 @@ import userReducers from './containers/User/reducer.js';
 
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
-const history = createHistory();
 
+const history = createHistory();
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = routerMiddleware(history);
 

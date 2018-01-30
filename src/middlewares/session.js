@@ -4,7 +4,7 @@ require('dotenv').config();
 const fs = require('fs');
 const uuidv4 = require('uuid/v4');
 const session = require('express-session');
-var FileStore = require('session-file-store')(session);
+const FileStore = require('session-file-store')(session);
 
 const options = {
   path: 'sessions',
@@ -13,8 +13,11 @@ const options = {
 
 module.exports.use = session({
   secret: 'mySecret',
-  cookie: { httpOnly: false },
+  cookie: {
+    httpOnly: false,
+    maxAge: new Date( Date.now() + 60 * 60 * 1000 * 24 * 30),
+  },
   saveUninitialized: true,
-  resave: false,
+  resave: true,
   store: new FileStore(options),
 });
