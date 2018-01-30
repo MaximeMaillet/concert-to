@@ -5,8 +5,7 @@ const Router = require('express-imp-router');
 const bodyParser = require('body-parser');
 const cookiesMiddleware = require('universal-cookie-express');
 
-const db = require('./src/models');
-
+// const db = require('./src/models');
 // db.sequelize.sync({
 //   alter: true,
 // })

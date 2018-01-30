@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
 
   Artist.associate = (models) => {
     Artist.hasMany(models.event, {
-      as: 'Events'
+      as: 'events'
     });
 
     Artist.belongsToMany(models.user, {

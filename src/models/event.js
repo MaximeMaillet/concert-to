@@ -36,5 +36,9 @@ module.exports = function(sequelize, DataTypes) {
     }
   );
 
+  Event.associate = (models) => {
+    Event.belongsTo(models.location);
+  };
+
   return Event;
 };

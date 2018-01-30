@@ -53,12 +53,15 @@ services:
       MYSQL_CONNECTION_STRING: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@bd/${MYSQL_DATABASE}
       SCRAPPER_PORT: 8080
       SCRAPPER_HOST: scrapper
+      ELASTIC_HOST: es
+      ELASTIC_PORT: 9200
     volumes:
       - ./sessions:/var/app/sessions
       - build:/var/app/build
     links:
       - bd
       - scrapper
+      - es
 
   nginx:
     image: nginx:1.13
@@ -74,3 +77,15 @@ services:
     links:
       - app
       - scrapper
+
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.1.3
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1

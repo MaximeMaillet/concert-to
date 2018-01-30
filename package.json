@@ -8,7 +8,8 @@
     "front:dev": "webpack-dev-server -d --hot --config=./src/config/webpack.config.js --watch --host localhost --port 8091",
     "front:prod": "NODE_ENV=production webpack --config=./src/config/webpack.config.js",
     "back:dev": "./node_modules/.bin/nodemon --config daemon.json",
-    "back:prod": "node index.js"
+    "back:prod": "node index.js",
+    "elastic:populate": "node scripts/populate.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
+    "elasticsearch": "^14.0.0",
     "express": "^4.16.2",
     "express-imp-router": "^0.1.5",
     "express-session": "^1.15.6",
