@@ -7,6 +7,6 @@ Next step :
     * Lien vers maps quand on la géoloc est présente
     * Back card pour les détails
 
-Next next step :
-
-* Elasticsearch pour rechercher sur les évènements
+* Elasticsearch
+    * populate / hook sur le transcodage (workflow)
+    * configuration des settings pour affiner la recherche

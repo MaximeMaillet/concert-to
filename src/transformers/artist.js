@@ -5,6 +5,11 @@ const _groups = {
     artist: ['id', 'name', 'events'],
     events: ['id', 'name', 'date_start', 'date_end', 'location'],
     location: ['id', 'name', 'address', 'cp', 'city', 'country', 'geoloc'],
+  },
+  'user': {
+    artist: ['id', 'name', 'logo', 'events'],
+    events: ['name', 'date_start', 'location'],
+    location: ['name', 'address', 'cp', 'city', 'country', 'latitude', 'longitude']
   }
 };
 
@@ -41,6 +46,10 @@ function transformAllAsObject(data, groups) {
 }
 
 function transformOne(data, groups) {
+  if(!_groups[groups]) {
+    return {};
+  }
+
   const artist = {};
   const _g = _groups[groups].artist;
   for(const i in _g) {

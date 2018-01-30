@@ -36,12 +36,14 @@ class ArtistCard extends Component {
           <CardTitle>{this.props.artist.name}</CardTitle>
           <CardSubtitle><em>music style</em></CardSubtitle>
           <ul className="list-group">
-            {this.props.artist.Events.map((event, id) => (
+            {(this.props.artist.events && this.props.artist.events.length > 0 && this.props.artist.events.map((event, id) => (
               <li key={id} className="list-group-item list-group-events">
                 <span className="date">{Moment(event.date_start).format('d MMM Y')}</span>
                 <span className="name">{event.name}</span>
               </li>
-            ))}
+            )))
+            ||
+            <div>No events</div>}
           </ul>
           <div className="text-right">
             <button className="btn btn-primary align-middle" type="button" onClick={this.handleLike}><Heart/></button>
