@@ -77,5 +77,12 @@ module.exports = function(sequelize, DataTypes) {
     return bcrypt.compareSync(password, goodPassword);
   };
 
+  User.associate = (models) => {
+    User.belongsToMany(models.artist, {
+      through: 'artist_likes',
+      as: 'Likes',
+    });
+  };
+
   return User;
 };

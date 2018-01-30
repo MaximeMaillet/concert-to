@@ -11,7 +11,7 @@
       ]
     },
     {
-      "target": ["/api/user", "/api/search"],
+      "target": ["/api/user", "/api/search", "/api/artists/:id/likes"],
       "action": ["authorization#use"]
     }
   ],
@@ -38,6 +38,18 @@
       "post": {
         "controller": "SearchController#artist",
         "errorHandler": "database"
+      }
+    },
+    "/artists/:id": {
+      "get": {
+        "controller": "ArtistController#get",
+        "errorHandler": "api"
+      },
+      "/likes": {
+        "get": {
+          "controller": "ArtistController#like",
+          "errorHandler": "api"
+        }
       }
     }
   }

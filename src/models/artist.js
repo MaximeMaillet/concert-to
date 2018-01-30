@@ -28,6 +28,10 @@ module.exports = function(sequelize, DataTypes) {
     Artist.hasMany(models.event, {
       as: 'Events'
     });
+
+    Artist.belongsToMany(models.user, {
+      through: 'artist_likes'
+    });
   };
 
   return Artist;

@@ -3,12 +3,15 @@ footer {
   align-items: center;
   flex-direction: column;
   padding: 2em;
+  margin-top: 100px;
 
   .signature {
     border-top: 1px solid $primary;
     margin: auto;
+    padding: 5px;
     width: 60%;
     text-align: center;
+    font-size: 0.8em;
 
     div, a {
       vertical-align: middle;
@@ -19,8 +22,8 @@ footer {
     .test {
       background-image: url('../../assets/images/penis1.svg');
       background-size: 100% 100%;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
 
       &:hover {
         background-image: url('../../assets/images/penis2.svg');

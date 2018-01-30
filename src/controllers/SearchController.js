@@ -6,10 +6,13 @@ const {artist: Artist, event: Event} = require('../models');
 const rp = require('request-promise');
 
 async function artist(req, res, next) {
-  console.log('Search');
-  console.log(req.body.search);
-
   try {
+
+    // if (req.body.search === undefined) {
+    //
+    // }
+
+    console.log(req.body.search);
 
     const artists = await Artist
       .findAll({
