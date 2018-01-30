@@ -20,31 +20,32 @@ function searchArtist(term) {
         reject(err);
       } else {
 
-        const data = res.hits.hits[0]._source;
         const arrayIds = [];
         if(res.hits.total === 0) {
           resolve([]);
-        }
-
-        if(Array.isArray(data)) {
-          for(const i in data) {
-            arrayIds.push(data[i].id);
-          }
         } else {
-          arrayIds.push(data.id);
-        }
+          const data = res.hits.hits[0]._source;
 
-        return Artist.findAll({
-          where: {
-            id: {
-              [Op.in]: arrayIds
+          if(Array.isArray(data)) {
+            for(const i in data) {
+              arrayIds.push(data[i].id);
             }
-          },
-          include: [{as: 'events', separate: true, model: Event}],
-        })
-          .then((artist) => {
-            resolve(transformer.transform(artist, 'user'));
-          });
+          } else {
+            arrayIds.push(data.id);
+          }
+
+          return Artist.findAll({
+            where: {
+              id: {
+                [Op.in]: arrayIds
+              }
+            },
+            include: [{as: 'events', separate: true, model: Event}],
+          })
+            .then((artist) => {
+              resolve(transformer.transform(artist, 'user'));
+            });
+        }
       }
     });
   });
