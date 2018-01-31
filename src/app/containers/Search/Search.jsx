@@ -52,15 +52,15 @@ class Search extends Component {
   };
 
   load = (val) => {
-    submit({
-      search: this.state.search,
-      from: this.state.page+1,
-      size: this.state.size,
-    })
-      .then((values) => {
-        this.setState({artists: values.data});
-      });
-    this.setState({page: this.state.page+1});
+    // submit({
+    //   search: this.state.search,
+    //   from: this.state.page+1,
+    //   size: this.state.size,
+    // })
+    //   .then((values) => {
+    //     this.setState({artists: values.data});
+    //   });
+    // this.setState({page: this.state.page+1});
   };
 
   componentDidMount() {

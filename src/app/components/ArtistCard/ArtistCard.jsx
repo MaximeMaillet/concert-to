@@ -11,21 +11,40 @@ class ArtistCard extends Component {
 
   constructor(props) {
     super(props);
-    if(props.artist && props.artist.Events && props.artist.Events.length > 0) {
-      props.artist.Events.sort((a,b) => {
-        const dA = new Date(a.date_start);
-        const dB = new Date(b.date_start);
-
-        if (dA < dB) return -1;
-        else if(dA > dB) return  1;
-        else return  0;
-      });
-    }
+    // if(props.artist && props.artist.Events && props.artist.Events.length > 0) {
+    //   props.artist.Events.sort((a,b) => {
+    //     const dA = new Date(a.date_start);
+    //     const dB = new Date(b.date_start);
+    //
+    //     if (dA < dB) return -1;
+    //     else if(dA > dB) return  1;
+    //     else return  0;
+    //   });
+    // }
   }
 
   handleLike = () => {
     this.props.handleLike(this.props.artist);
   };
+
+  componentWillMount() {
+    const now = new Date();
+    this.props.artist.events = this.props.artist.events
+      .map((event) => {
+        event.date_start = new Date(event.date_start);
+        event.date_end = new Date(event.date_end);
+        return event;
+      })
+      .filter((event) => {
+        return now <= event.date_start;
+      })
+      .sort((eventA, eventB) => {
+        if(eventA.date_start > eventB.date_start) return 1;
+        else return -1;
+      })
+      .slice(0, 3);
+  }
+
 
   render() {
     return (
@@ -42,9 +61,9 @@ class ArtistCard extends Component {
           <CardTitle>{this.props.artist.name}</CardTitle>
           <CardSubtitle><em>music style</em></CardSubtitle>
           <ul className="list-group">
-            {(this.props.artist.events && this.props.artist.events.length > 0 && this.props.artist.events.map((event, id) => (
+            {(this.props.artist.events.length > 0 && this.props.artist.events.map((event, id) => (
               <li key={id} className="list-group-item list-group-events">
-                <span className="date">{Moment(event.date_start).format('d MMM Y')}</span>
+                <span className="date">{`${event.date_start.getUTCDate()}/${event.date_start.getMonth()+1}/${event.date_start.getFullYear()}`}</span>
                 <span className="name">{event.name}</span>
               </li>
             )))
