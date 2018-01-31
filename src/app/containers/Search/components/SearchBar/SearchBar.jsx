@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import submit from './submit.js';
 import './SearchBar.scss';
 import { Search as SearchIcon } from 'react-feather';
 
@@ -36,5 +35,4 @@ class SearchBar extends Component {
 
 export default reduxForm({
   form: 'search-form',
-  onSubmit: submit,
 })(SearchBar);

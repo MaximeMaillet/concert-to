@@ -1,16 +1,34 @@
 .artist-card {
-  .list-group-events {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
 
-    .date {
-      font-size: 0.7em;
-      font-style: italic;
+  .img {
+    position: relative;
+
+    .btn-transparent {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: transparent;
+      color: $primary;
     }
+  }
 
-    .name {
-      margin-left: auto;
+  .list-group {
+    height: 150px;
+    overflow: scroll;
+
+    .list-group-events {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .date {
+        font-size: 0.7em;
+        font-style: italic;
+      }
+
+      .name {
+        margin-left: auto;
+      }
     }
   }
 }

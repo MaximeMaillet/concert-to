@@ -11,15 +11,14 @@ class ArtistCard extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     if(props.artist && props.artist.Events && props.artist.Events.length > 0) {
       props.artist.Events.sort((a,b) => {
         const dA = new Date(a.date_start);
         const dB = new Date(b.date_start);
 
-        if (dA < dB)    return -1;
+        if (dA < dB) return -1;
         else if(dA > dB) return  1;
-        else                      return  0;
+        else return  0;
       });
     }
   }
@@ -31,7 +30,14 @@ class ArtistCard extends Component {
   render() {
     return (
       <Card className="artist-card">
-        <CardImg top width="100%" src={this.props.artist.logo} alt="Card image cap" />
+        <div className="img">
+          <img
+            width="100%"
+            src={this.props.artist.logo}
+            alt="Card image cap"
+            className="card-img-top" />
+          <button className="btn btn-transparent" type="button" onClick={this.handleLike}><Heart fill="#7d4627"/></button>
+        </div>
         <CardBody>
           <CardTitle>{this.props.artist.name}</CardTitle>
           <CardSubtitle><em>music style</em></CardSubtitle>
@@ -45,9 +51,6 @@ class ArtistCard extends Component {
             ||
             <div>No events</div>}
           </ul>
-          <div className="text-right">
-            <button className="btn btn-primary align-middle" type="button" onClick={this.handleLike}><Heart/></button>
-          </div>
         </CardBody>
       </Card>
     );

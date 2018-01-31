@@ -13,7 +13,11 @@ async function artist(req, res, next) {
       });
     }
 
-    const result = await helper.searchArtist(req.body.search);
+    const result = await helper.searchArtist({
+      from: req.body.from,
+      size: req.body.size,
+      term: req.body.search
+    });
 
     if(result.length > 0) {
       res.send(transformer.transform(result, 'user'));
