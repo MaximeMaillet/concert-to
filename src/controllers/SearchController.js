@@ -1,21 +1,23 @@
 require('dotenv').config();
 
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
-const {artist: Artist, event: Event} = require('../models');
 const helper = require('../helpers');
+const transformer = require('../transformers/artist');
 
 async function artist(req, res, next) {
   try {
-    const result = await helper.searchArtist(req.body.search);
-
-    if(result.length > 0) {
-      res.send(result);
+    if(!req.body.search) {
+      req.body.search = '';
     } else {
       helper.scrap({
         name: req.body.search
       });
+    }
 
+    const result = await helper.searchArtist(req.body.search);
+
+    if(result.length > 0) {
+      res.send(transformer.transform(result, 'user'));
+    } else {
       res.status(404).send({
         'message': 'No result found'
       });

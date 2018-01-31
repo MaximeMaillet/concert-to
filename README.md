@@ -1,5 +1,10 @@
 Next step :
 
+###Bloquant
+
+* Sortir le parameters.yml du docker scrapper
+ 
+
 * Administration des datas
 * Front
     * Mettre en évidence les dates qui ne sont pas encore passées

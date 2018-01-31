@@ -6,7 +6,7 @@ const transformer = require('../transformers/artist');
 
 const client = new elasticsearch.Client({
   host: `${process.env.ELASTIC_HOST}:${process.env.ELASTIC_PORT}`,
-  // log: 'trace'
+  log: 'trace'
 });
 
 module.exports = {
@@ -42,8 +42,8 @@ function searchArtist(term) {
             },
             include: [{as: 'events', separate: true, model: Event}],
           })
-            .then((artist) => {
-              resolve(transformer.transform(artist, 'user'));
+            .then((result) => {
+              resolve(result);
             });
         }
       }

@@ -11,24 +11,31 @@ const client = new elasticsearch.Client({
   // log: 'trace'
 });
 
-start()
+start('concerto', 'artist')
   .then(() => {
     console.log('Done populating');
     process.exit();
   });
 
-async function start() {
+async function start(index, type) {
 
   try {
     console.log('Delete index');
-    await deleteIndex('concerto');
+    await deleteIndex(index);
+  } catch(e) {}
+
+  try {
     console.log('Create index');
-    await createIndice('concerto', 'artist');
+    await createIndice(index, type);
+    console.log('Create settings');
+    await createSettings(index);
+    console.log('Create mapping');
+    await createMapping(index, type);
     console.log('Fetch data');
     const data = await getData();
     console.log(`Data fetched : ${data.length}`);
     console.log('Insert data');
-    await bulkData('concerto','artist', data);
+    await bulkData(index,type, data);
   } catch(e) {
     console.log(e);
   }
@@ -90,44 +97,51 @@ function createIndice(index, type) {
         reject(err);
       }
       else {
-        client.indices.putMapping({
-          index,
-          type,
-          body: {
+        resolve(resp);
+      }
+    });
+  });
+}
+
+function createMapping(index, type) {
+  return new Promise((resolve, reject) => {
+    client.indices.putMapping({
+      index,
+      type,
+      body: {
+        properties: {
+          id: {type: 'integer'},
+          name: {
+            'analyzer': 'my_analyzer',
+            type: 'text',
+          },
+          events: {
+            type: 'nested',
             properties: {
               id: {type: 'integer'},
-              name: {
-                type: 'text',
-              },
-              events: {
+              name: {type: 'text'},
+              date_start: {type: 'date'},
+              date_end: {type: 'date'},
+              location: {
                 type: 'nested',
                 properties: {
-                  id: {type: 'integer'},
                   name: {type: 'text'},
-                  date_start: {type: 'date'},
-                  date_end: {type: 'date'},
-                  location: {
-                    type: 'nested',
-                    properties: {
-                      name: {type: 'text'},
-                      address: {type: 'text'},
-                      cp: {type: 'text'},
-                      city: {type: 'text'},
-                      country: {type: 'text'},
-                      geoloc: {type: 'geo_point'}
-                    }
-                  },
+                  address: {type: 'text'},
+                  cp: {type: 'text'},
+                  city: {type: 'text'},
+                  country: {type: 'text'},
+                  geoloc: {type: 'geo_point'}
                 }
-              }
+              },
             }
           }
-        }, (err, resp) => {
-          if(err) {
-            reject(err);
-          } else {
-            resolve(resp);
-          }
-        });
+        }
+      }
+    }, (err, resp) => {
+      if(err) {
+        reject(err);
+      } else {
+        resolve(resp);
       }
     });
   });
@@ -158,5 +172,53 @@ function bulkData(index, type, body) {
           resolve(res);
         }
       });
+  });
+}
+
+/**
+ * Create settings like analyzer
+ * @param index
+ * @return {Promise}
+ */
+function createSettings(index) {
+  return new Promise((resolve, reject) => {
+    client.indices.close({
+      index
+    }, (err, resp) => {
+      client.indices.putSettings({
+        index,
+        body: {
+          'settings': {
+            'analysis': {
+              'analyzer': {
+                'my_analyzer': {
+                  'tokenizer': 'my_tokenizer',
+                  'filter': ['lowercase']
+                }
+              },
+              'tokenizer': {
+                'my_tokenizer': {
+                  'type': 'edge_ngram',
+                  'min_gram': 4,
+                  'max_gram': 12,
+                  'token_chars': [
+                    'letter',
+                    'digit'
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }, (err, resp) => {
+        client.indices.open({index}, (err, resp) => {
+          if(err) {
+            reject(err);
+          } else {
+            resolve(resp);
+          }
+        });
+      });
+    });
   });
 }

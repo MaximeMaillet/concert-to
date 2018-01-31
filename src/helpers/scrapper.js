@@ -12,5 +12,8 @@ async function scrap(body) {
     method: 'POST',
     body: body,
     json: true
-  });
+  })
+    .catch((err) => {
+      console.log(err);
+    });
 }
