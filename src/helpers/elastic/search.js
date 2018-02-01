@@ -1,5 +1,5 @@
 const elasticsearch = require('elasticsearch');
-const {artist: Artist, event: Event} = require('../../models');
+const {artist: Artist, event: Event, location: Location} = require('../../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -25,8 +25,6 @@ function searchArtist(query) {
         } else {
           const {hits} = res.hits;
 
-          console.log(hits.length);
-
           for(const i in hits) {
             arrayIds.push(hits[i]._source.id);
           }
@@ -37,7 +35,12 @@ function searchArtist(query) {
                 [Op.in]: arrayIds
               }
             },
-            include: [{as: 'events', separate: true, model: Event}],
+            include: [{
+              as: 'events',
+              separate: true,
+              model: Event,
+              include: [{model: Location, as:'location'}]
+            }],
           })
             .then((result) => {
               resolve(result);

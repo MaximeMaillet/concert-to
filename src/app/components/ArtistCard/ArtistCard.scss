@@ -1,3 +1,6 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/_variables";
+
 .artist-card {
 
   .img {
@@ -12,22 +15,43 @@
     }
   }
 
-  .list-group {
-    height: 150px;
-    overflow: scroll;
+  .list-events {
+    height: 170px;
+    overflow: hidden;
+    padding: 0;
+    margin: 5px 0;
+    border-top: 1px solid $gray-300;
 
-    .list-group-events {
+    .list-item-events {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: baseline;
+      margin-bottom: 5px;
+      padding: 5px;
 
-      .date {
-        font-size: 0.7em;
-        font-style: italic;
+      .info {
+        display: flex;
+        flex-direction: column;
+        margin-left: 5px;
+
+        .date {
+          font-size: 0.7em;
+          font-style: italic;
+        }
+
+        .name {
+          font-weight: bold;
+          font-size: 0.8em;
+        }
       }
 
-      .name {
-        margin-left: auto;
+      .country {
+
+      }
+
+      &:hover {
+        background-color: $gray-200;
+        cursor: pointer;
       }
     }
   }

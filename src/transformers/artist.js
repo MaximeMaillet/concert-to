@@ -9,7 +9,7 @@ const _groups = {
   'user': {
     artist: ['id', 'name', 'logo', 'events'],
     events: ['name', 'date_start', 'location'],
-    location: ['name', 'address', 'cp', 'city', 'country', 'latitude', 'longitude']
+    location: ['name', 'address', 'cp', 'city', 'country', 'latitude', 'longitude', 'country_code']
   }
 };
 
@@ -67,6 +67,10 @@ function transformOne(data, groups) {
             lat: get(data.events[i].location, 'latitude', 0),
             lon: get(data.events[i].location, 'longitude', 0),
           };
+        }
+
+        if(_groups[groups].location.indexOf('country_code') !== -1) {
+          event.location.country_code = event.location.country.substr(0, 2).toUpperCase();
         }
       }
       events.push(event);

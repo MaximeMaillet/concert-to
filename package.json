@@ -38,6 +38,7 @@
     "express-imp-router": "^0.1.5",
     "express-session": "^1.15.6",
     "feather-icons": "^4.5.0",
+    "flag-icon-css": "^2.9.0",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "lodash.get": "^4.4.2",

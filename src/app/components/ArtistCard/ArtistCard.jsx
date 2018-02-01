@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardBody, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { Heart } from 'react-feather';
+import 'flag-icon-css/sass/flag-icon.scss';
+import './ArtistCard.scss';
 
 import Moment from 'moment';
 Moment.locale('fr');
-
-import './ArtistCard.scss';
 
 class ArtistCard extends Component {
 
@@ -31,8 +31,8 @@ class ArtistCard extends Component {
     const now = new Date();
     this.props.artist.events = this.props.artist.events
       .map((event) => {
-        event.date_start = new Date(event.date_start);
-        event.date_end = new Date(event.date_end);
+        event.date_start = Moment(new Date(event.date_start));
+        event.date_end = Moment(new Date(event.date_end));
         return event;
       })
       .filter((event) => {
@@ -60,16 +60,24 @@ class ArtistCard extends Component {
         <CardBody>
           <CardTitle>{this.props.artist.name}</CardTitle>
           <CardSubtitle><em>music style</em></CardSubtitle>
-          <ul className="list-group">
+          <ul className="list-events">
             {(this.props.artist.events.length > 0 && this.props.artist.events.map((event, id) => (
-              <li key={id} className="list-group-item list-group-events">
-                <span className="date">{`${event.date_start.getUTCDate()}/${event.date_start.getMonth()+1}/${event.date_start.getFullYear()}`}</span>
-                <span className="name">{event.name}</span>
+              <li key={id} className="list-item-events">
+                <div className="country">
+                  <span className={`flag-icon flag-icon-${event.location.country_code.toLowerCase()}`} />
+                </div>
+                <div className="info">
+                  <span className="name">{event.name}</span>
+                  <span className="date">{`${event.date_start.format('ddd Do MMMM YYYY')}`}</span>
+                </div>
               </li>
             )))
             ||
             <div>No events</div>}
           </ul>
+          <div className="text-right">
+            <a href="javascript:">Plus ...</a>
+          </div>
         </CardBody>
       </Card>
     );
