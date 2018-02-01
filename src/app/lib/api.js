@@ -38,12 +38,12 @@ const calls = {};
 
 for(const i in routes) {
   calls[routes[i].name] = (slug, params) => {
-    console.log(slug, params);
-    const regex = /:([a-z_]+)(\([^\)]+\))?(\??)/ig;
-    if(regex.test(routes[i].route)) {
-      const matchs = routes[i].route.match(regex);
+    let route = routes[i].route;
+    const regex = new RegExp(/:([a-z_]+)(\([^\)]+\))?(\??)/ig);
+    if(regex.test(route)) {
+      const matchs = route.match(regex);
       for(const j in matchs) {
-        routes[i].route = routes[i].route.replace(regex, get(slug, matchs[j].substr(1)));
+        route = route.replace(regex, get(slug, matchs[j].substr(1)));
       }
     }
 
@@ -53,7 +53,7 @@ for(const i in routes) {
 
     let data = {};
     if (params) {
-      if (routes[i].route.toLowerCase() === 'get') {
+      if (route.toLowerCase() === 'get') {
         data = {
           params: params
         };
@@ -65,7 +65,7 @@ for(const i in routes) {
     }
 
     return axios.request(Object.assign({
-      url: `${API_URL}${routes[i].route}`,
+      url: `${API_URL}${route}`,
       method: routes[i].method,
       withCredentials: true,
     }, data));

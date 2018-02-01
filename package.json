@@ -9,7 +9,9 @@
     "front:prod": "NODE_ENV=production webpack --config=./src/config/webpack.config.js",
     "back:dev": "./node_modules/.bin/nodemon --config daemon.json",
     "back:prod": "node index.js",
-    "elastic:populate": "node scripts/populate.js"
+    "elastic:populate": "node scripts/populate.js",
+    "docker:build": "/usr/local/bin/docker build --build-arg API_URL=/api --build-arg API_PORT=8090 -t deuxmax/concerto:latest .",
+    "db:sync": "node scripts/database_sync.js"
   },
   "repository": {
     "type": "git",

@@ -35,7 +35,7 @@ class Search extends Component {
   };
 
   handleLike = (artist) => {
-
+    console.log(artist);
     api.like({id: artist.id})
       .then(() => {
         toastr.success('Love Like 4ever', `Great love to ${artist.name}`);
