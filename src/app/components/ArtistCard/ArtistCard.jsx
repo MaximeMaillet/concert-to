@@ -8,28 +8,13 @@ import Moment from 'moment';
 Moment.locale('fr');
 
 class ArtistCard extends Component {
-
-  constructor(props) {
-    super(props);
-    // if(props.artist && props.artist.Events && props.artist.Events.length > 0) {
-    //   props.artist.Events.sort((a,b) => {
-    //     const dA = new Date(a.date_start);
-    //     const dB = new Date(b.date_start);
-    //
-    //     if (dA < dB) return -1;
-    //     else if(dA > dB) return  1;
-    //     else return  0;
-    //   });
-    // }
-  }
-
   handleLike = () => {
     this.props.handleLike(this.props.artist);
   };
 
   componentWillMount() {
     const now = new Date();
-    this.props.artist.events = this.props.artist.events
+    this.props.artist.shortEvents = this.props.artist.events
       .map((event) => {
         event.date_start = Moment(new Date(event.date_start));
         event.date_end = Moment(new Date(event.date_end));
@@ -59,19 +44,22 @@ class ArtistCard extends Component {
         </div>
         <CardBody>
           <CardTitle>{this.props.artist.name}</CardTitle>
-          <CardSubtitle><em>music style</em></CardSubtitle>
+          <CardSubtitle><em>{this.props.artist.events.length} concert(s)</em></CardSubtitle>
           <ul className="list-events">
-            {(this.props.artist.events.length > 0 && this.props.artist.events.map((event, id) => (
-              <li key={id} className="list-item-events">
-                <div className="country">
-                  <span className={`flag-icon flag-icon-${event.location.country_code.toLowerCase()}`} />
-                </div>
-                <div className="info">
-                  <span className="name">{event.name}</span>
-                  <span className="date">{`${event.date_start.format('ddd Do MMMM YYYY')}`}</span>
-                </div>
-              </li>
-            )))
+            {(this.props.artist.shortEvents &&
+              this.props.artist.shortEvents.length > 0 &&
+              this.props.artist.events.map((event, id) => (
+                <li key={id} className="list-item-events">
+                  <div className="country">
+                    <span className={`flag-icon flag-icon-${event.location.country_code.toLowerCase()}`} />
+                  </div>
+                  <div className="info">
+                    <span className="name">{event.name}</span>
+                    <span className="date">{`${event.date_start.format('ddd Do MMMM YYYY')}`}</span>
+                  </div>
+                </li>
+              ))
+            )
             ||
             <div>No events</div>}
           </ul>

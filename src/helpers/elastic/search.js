@@ -2,6 +2,7 @@ const elasticsearch = require('elasticsearch');
 const {artist: Artist, event: Event, location: Location} = require('../../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+let currentUser = null;
 
 const client = new elasticsearch.Client({
   host: `${process.env.ELASTIC_HOST}:${process.env.ELASTIC_PORT}`,
@@ -12,7 +13,8 @@ module.exports = {
   searchArtist,
 };
 
-function searchArtist(query) {
+function searchArtist(user, query) {
+  currentUser = user;
   return new Promise((resolve, reject) => {
     client.search(getSearch(query), (err, res) => {
       if(err) {
@@ -24,10 +26,10 @@ function searchArtist(query) {
           resolve([]);
         } else {
           const {hits} = res.hits;
-
-          for(const i in hits) {
-            arrayIds.push(hits[i]._source.id);
-          }
+          const arrayReturn = hits.map((key) => {
+            arrayIds.push(key._source.id);
+            return key._source;
+          });
 
           return Artist.findAll({
             where: {
@@ -43,7 +45,14 @@ function searchArtist(query) {
             }],
           })
             .then((result) => {
-              resolve(result);
+              for(const i in result) {
+                for(const j in arrayReturn) {
+                  if(arrayReturn[j].id === result[i].id) {
+                    arrayReturn[j] = result[i];
+                  }
+                }
+              }
+              resolve(arrayReturn);
             });
         }
       }
@@ -51,26 +60,39 @@ function searchArtist(query) {
   });
 }
 
-function getSearch(query) {
-  console.log(query);
-  query = defaultQuery(query);
+function getSearch(_query) {
+  const {query, shoulds} = defaultQuery(_query);
   const musts = [];
 
   if(query.term) {
     musts.push(addTerm(query.term));
   }
 
+  console.log(shoulds);
+
+  shoulds.push({
+    match: {
+      likes: {
+        query: currentUser.id,
+        boost: 1.0,
+      },
+    }
+  });
+  shoulds.push(addRange({events_count: {gte: 10, boost: 0.5}}));
+
   return {
     index: 'concerto',
     type: 'artist',
     body: flatten({
+      min_score: 0,
       from: query.from,
       size: query.size,
       query: {
         bool: {
-          must: musts
-        }
-      }
+          must: musts,
+          should: shoulds,
+        },
+      },
     })
   };
 }
@@ -81,11 +103,13 @@ function addTerm(term) {
   };
 }
 
-function flatten(query) {
-  if(query.query.bool.must.length === 0) {
-    delete query.query;
-  }
+function addRange(range) {
+  return {
+    range: range
+  };
+}
 
+function flatten(query) {
   return query;
 }
 
@@ -98,5 +122,25 @@ function defaultQuery(query) {
     query.size = 30;
   }
 
-  return query;
+
+  if(!query.sort) {
+    query.sort = [
+      {
+        events_count: {
+          order: 'desc',
+        }
+      },
+      {
+        likes_count: {
+          order: 'desc',
+        }
+      }
+    ];
+  }
+
+  const shoulds = [];
+  shoulds.push(addRange({events_count: {gte: 2, boost: 0.3}}));
+  shoulds.push(addRange({likes_count: {gte: 2, boost: 0.2}}));
+
+  return {query, shoulds};
 }

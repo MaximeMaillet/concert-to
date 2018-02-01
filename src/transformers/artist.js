@@ -2,7 +2,7 @@ const get = require('lodash.get');
 
 const _groups = {
   'es': {
-    artist: ['id', 'name', 'events'],
+    artist: ['id', 'name', 'events', 'likes', 'likes_count'],
     events: ['id', 'name', 'date_start', 'date_end', 'location'],
     location: ['id', 'name', 'address', 'cp', 'city', 'country', 'geoloc'],
   },
@@ -18,7 +18,6 @@ module.exports = {
 };
 
 function transform(data, groups) {
-
   if(typeof data === 'object') {
     return transformAllAsObject(data, groups);
   } else if(Array.isArray(data)) {
@@ -54,6 +53,10 @@ function transformOne(data, groups) {
   const _g = _groups[groups].artist;
   for(const i in _g) {
     artist[_g[i]] = get(data, _g[i], null);
+  }
+
+  if(_groups[groups].artist.indexOf('likes_count') !== -1) {
+    artist['likes_count'] = data.likes.length;
   }
 
   if(artist.events) {

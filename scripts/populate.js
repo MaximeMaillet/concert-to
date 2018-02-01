@@ -20,21 +20,15 @@ start('concerto', 'artist')
 async function start(index, type) {
 
   try {
-    console.log('Delete index');
     await deleteIndex(index);
   } catch(e) {}
 
   try {
-    console.log('Create index');
     await createIndice(index, type);
-    console.log('Create settings');
     await createSettings(index);
-    console.log('Create mapping');
     await createMapping(index, type);
-    console.log('Fetch data');
     const data = await getData();
     console.log(`Data fetched : ${data.length}`);
-    console.log('Insert data');
     await bulkData(index,type, data);
   } catch(e) {
     console.log(e);
@@ -46,21 +40,41 @@ async function start(index, type) {
  * @return {Promise.<TResult>}
  */
 async function getData() {
-  return await Artist.findAll({
-    include: {
-      model: db.sequelize.models.event,
-      as: 'events',
-      separate: true,
-      include: {
-        model: db.sequelize.models.location,
-        as: 'location',
-        raw: true
+  console.log('Fetch data');
+  const artists = await Artist.findAll({
+    include: [
+      {
+        model: db.sequelize.models.event,
+        as: 'events',
+        separate: true,
+        include: [
+          {
+            model: db.sequelize.models.location,
+            as: 'location',
+            raw: true
+          }
+        ]
       }
-    },
-  })
-    .then((artist) => {
-      return artistTransformer.transform(artist, 'es');
+    ]
+  });
+
+  for(const i in artists) {
+    artists[i].dataValues.likes = await artists[i].getLikes({
+      attributes: ['id'],
+      joinTableAttributes: [],
+      raw: true
+    }).then((res) => {
+      const array = [];
+      for(const i in res) {
+        array.push(res[i].id);
+      }
+      return array;
     });
+
+    console.log(artists[i].dataValues.likes);
+  }
+
+  return artistTransformer.transform(artists, 'es');
 }
 
 /**
@@ -69,6 +83,7 @@ async function getData() {
  * @return {Promise}
  */
 function deleteIndex(index) {
+  console.log('Delete index');
   return new Promise((resolve, reject) => {
     client.indices.delete({
       index,
@@ -83,12 +98,13 @@ function deleteIndex(index) {
 }
 
 /**
- * Create index + mapping
+ * Create index
  * @param index
  * @param type
  * @return {Promise}
  */
 function createIndice(index, type) {
+  console.log('Create index');
   return new Promise((resolve, reject) => {
     client.indices.create({
       index
@@ -103,7 +119,14 @@ function createIndice(index, type) {
   });
 }
 
+/**
+ * Create mapping
+ * @param index
+ * @param type
+ * @return {Promise}
+ */
 function createMapping(index, type) {
+  console.log('Create mapping');
   return new Promise((resolve, reject) => {
     client.indices.putMapping({
       index,
@@ -114,6 +137,12 @@ function createMapping(index, type) {
           name: {
             'analyzer': 'my_analyzer',
             type: 'text',
+          },
+          events_count: {
+            type: 'integer',
+          },
+          likes_count: {
+            type: 'integer',
           },
           events: {
             type: 'nested',
@@ -155,9 +184,11 @@ function createMapping(index, type) {
  * @return {Promise}
  */
 function bulkData(index, type, body) {
+  console.log('Insert data');
   return new Promise((resolve, reject) => {
     const bulk = [];
     for(const i in body) {
+      body[i].events_count = body[i].events.length;
       bulk.push(
         {index: {_index: index, _type: type, _id: i+1}},
         body[i],
@@ -181,6 +212,7 @@ function bulkData(index, type, body) {
  * @return {Promise}
  */
 function createSettings(index) {
+  console.log('Create settings');
   return new Promise((resolve, reject) => {
     client.indices.close({
       index

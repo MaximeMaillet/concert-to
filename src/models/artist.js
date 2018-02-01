@@ -30,7 +30,8 @@ module.exports = function(sequelize, DataTypes) {
     });
 
     Artist.belongsToMany(models.user, {
-      through: 'artist_likes'
+      through: 'artist_likes',
+      as: 'Likes'
     });
   };
 
