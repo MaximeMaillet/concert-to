@@ -8,9 +8,9 @@ async function artist(req, res, next) {
     if(!req.body.search) {
       req.body.search = '';
     } else {
-      // helper.scrap({
-      //   name: req.body.search
-      // });
+      helper.scrap({
+        name: req.body.search
+      });
     }
 
     const result = await helper.searchArtist(req.session.user, {

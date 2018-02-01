@@ -6,7 +6,7 @@ let currentUser = null;
 
 const client = new elasticsearch.Client({
   host: `${process.env.ELASTIC_HOST}:${process.env.ELASTIC_PORT}`,
-  log: 'trace'
+  // log: 'trace'
 });
 
 module.exports = {
@@ -67,8 +67,6 @@ function getSearch(_query) {
   if(query.term) {
     musts.push(addTerm(query.term));
   }
-
-  console.log(shoulds);
 
   shoulds.push({
     match: {
