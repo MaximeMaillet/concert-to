@@ -43,6 +43,15 @@ const config = {
       {
         test: /\.(eot|ttf|woff|woff2)$/,
         loader: 'file-loader?name=public/fonts/[name].[ext]'
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {}
+          }
+        ]
       }
     ]
   },

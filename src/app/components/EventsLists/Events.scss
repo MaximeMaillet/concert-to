@@ -44,3 +44,32 @@
     }
   }
 }
+
+.event-modal {
+
+  .info {
+    display: flex;
+
+    .address {
+      margin-bottom: 10px;
+      font-size: 0.9em;
+      line-height: 1.2em;
+
+      .label {
+        font-weight: bold;
+      }
+    }
+
+    .links {
+      font-size: 0.9em;
+      display: flex;
+      flex-direction: column;
+      margin-left: auto;
+    }
+  }
+
+  .map {
+    overflow: hidden;
+    width: 100%;
+  }
+}

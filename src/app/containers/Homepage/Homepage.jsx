@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {toastr} from 'react-redux-toastr';
-
 import actions from '../User/actions.js';
 import Description from './components/Description/Description.jsx';
 

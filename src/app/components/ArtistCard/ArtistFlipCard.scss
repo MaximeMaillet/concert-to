@@ -16,10 +16,10 @@
 
       .btn-transparent {
         background-color: transparent;
-        color: $primary;
+        color: $secondary;
 
         &:hover {
-          color: $secondary;
+          color: $primary;
         }
       }
     }

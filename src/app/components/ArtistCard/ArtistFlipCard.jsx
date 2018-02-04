@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Card, CardBody, CardTitle, CardSubtitle} from 'reactstrap';
-import {Heart} from 'react-feather';
+import {Heart, Edit} from 'react-feather';
 import {ReactFlipCard, Back, Front} from '../FlipCard/FlipCard.jsx';
 import EventsList from '../EventsLists/EventsList.jsx';
 
@@ -40,6 +40,10 @@ export default class ArtistFlipCard extends Component {
     this.props.handleLike(this.props.artist);
   };
 
+  edit = () => {
+
+  }
+
   render() {
     return (
       <ReactFlipCard isFlipped={this.state.isFlipped}>
@@ -49,7 +53,8 @@ export default class ArtistFlipCard extends Component {
               backgroundImage: `url(${this.props.artist.logo})`,
             }}>
               <div className="actions">
-                <button className="btn btn-transparent" type="button" onClick={this.handleLike}><Heart fill="#7d4627"/></button>
+                <button className="btn btn-transparent" type="button" onClick={this.handleLike}><Heart /></button>
+                {/*<button className="btn btn-transparent" type="button" onClick={this.edit}><Edit /></button>*/}
               </div>
             </div>
             <CardBody>
