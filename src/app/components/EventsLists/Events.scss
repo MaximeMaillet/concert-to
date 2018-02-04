@@ -34,8 +34,8 @@
       }
     }
 
-    .country {
-
+    &.futur {
+      background-color: $secondary;
     }
 
     &:hover {

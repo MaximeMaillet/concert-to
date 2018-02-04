@@ -1,20 +1,14 @@
 Next step :
 
-###Bloquant
+### Release 0.0.1
 
-* Sortir le parameters.yml du docker scrapper
- 
-* Administration des datas
-    * Confirmer un event
+* [ ] Hook elasticsearch on likes
+* [ ] Hook elasticsearch after scrapping 
+* [ ] [Scrapper] Extract parameters.yml from Docker
+* [ ] Dislikes
 
-* Front
-    * Mettre en évidence les dates qui ne sont pas encore passées
-    * Mettre une info de localisation (pays ou ville)
-    * Lien vers maps quand on la géoloc est présente
-    * Back card pour les détails
-    * Ajouter le dislikes
+### Dislikes
 
-* Elasticsearch
-    * populate / hook sur le transcodage (workflow)
-    * hook sur les likes
-    * configuration des settings pour affiner la recherche
+* Front : add icon
+* Api : add endpoint
+* Elastic : exclude dislikes for user

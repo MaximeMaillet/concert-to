@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/MaximeMaillet/concert-to#readme",
   "dependencies": {
-    "@2max/react-flip-card": "0.0.1",
     "axios": "^0.17.1",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",

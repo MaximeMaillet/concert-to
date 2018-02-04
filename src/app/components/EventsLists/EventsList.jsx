@@ -31,10 +31,12 @@ export default class EventsList extends Component {
       .map((event) => {
         event.date_start = Moment(new Date(event.date_start));
         event.date_end = Moment(new Date(event.date_end));
+        if(event.date_start <= now) {
+          event.style = 'past';
+        } else {
+          event.style = 'futur';
+        }
         return event;
-      })
-      .filter((event) => {
-        return now <= event.date_start;
       })
       .sort((eventA, eventB) => {
         if (eventA.date_start > eventB.date_start) return 1;
@@ -42,7 +44,11 @@ export default class EventsList extends Component {
       });
 
     if(this.props.short) {
-      this.events = this.events.slice(0, 3);
+      this.events = this.events
+        .filter((event) => {
+          return now <= event.date_start;
+        })
+        .slice(0, 3);
     }
   }
 
@@ -67,7 +73,11 @@ export default class EventsList extends Component {
         />
         <ul className={`list-events ${this.props.className}`}>
           {(this.events.map((event, id) => (
-            <li key={id} className="list-item-events" onClick={() => this.openModal(event)}>
+            <li
+              key={id}
+              className={`list-item-events ${event.style}`}
+              onClick={() => this.openModal(event)}
+            >
               <div className="country">
                 <span className={`flag-icon flag-icon-${event.location.country_code.toLowerCase()}`}/>
               </div>

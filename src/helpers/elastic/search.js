@@ -6,7 +6,7 @@ let currentUser = null;
 
 const client = new elasticsearch.Client({
   host: `${process.env.ELASTIC_HOST}:${process.env.ELASTIC_PORT}`,
-  // log: 'trace'
+  log: 'trace'
 });
 
 module.exports = {
@@ -77,6 +77,23 @@ function getSearch(_query) {
     }
   });
   shoulds.push(addRange({events_count: {gte: 10, boost: 0.5}}));
+
+  shoulds.push({
+    'nested': {
+      'path': 'events',
+      'query': {
+        'bool': {
+          'should': [{
+            'range': {
+              'events.date_start': {
+                'gte': 'now',
+              }
+            }
+          }]
+        }
+      }
+    }
+  });
 
   return {
     index: 'concerto',

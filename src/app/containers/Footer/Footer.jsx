@@ -10,7 +10,6 @@ class Footer extends Component {
         <div className="signature">
           <div>Made with</div>
           <a href="https://github.com/MaximeMaillet" target="_blank" rel="noopener" className="test" />
-          <div>for everybody ...</div>
         </div>
       </footer>
     );
