@@ -1,0 +1,33 @@
+.artist-card {
+  height: 100%;
+
+  .img {
+    height: 250px;
+    width: 100%;
+    background-size: cover;
+    position: relative;
+
+    .actions {
+      width: 100%;
+      background-color: rgba(255,255,255,0.35);
+      position: absolute;
+      bottom: 0;
+      text-align: right;
+
+      .btn-transparent {
+        background-color: transparent;
+        color: $primary;
+
+        &:hover {
+          color: $secondary;
+        }
+      }
+    }
+  }
+
+  .list-events{
+    &.large {
+      height: 450px;
+    }
+  }
+}

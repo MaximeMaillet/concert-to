@@ -1,15 +1,33 @@
 .search-results {
-  &.search-row {
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
 
-    .search-col {
-      display: inline-block;
-      margin: 1%;
-      flex-grow: 1;
-      width: 31%;
-      //width: calc(100% * (1/4) - 10px - 1px);
-    }
+  .col-search {
+    height: 600px;
   }
+
+  //display: flex;
+  //flex-direction: row;
+  //background-color: red;
+  //
+  //.col-search {
+  //  display: inline-block;
+  //  margin: auto;
+  //  flex: initial;
+  //  flex-grow: 1;
+  //  width: 50%;
+  //}
+  //&.search-row {
+  //  display: flex;
+  //  flex-direction: column;
+  //
+  //  .search-col {
+  //    background: blue;
+  //    height: 100%;
+  //    width: 33%;
+  //    //display: inline-block;
+  //    //margin: 1%;
+  //    //flex-grow: 1;
+  //    //width: 31%;
+  //    //width: calc(100% * (1/4) - 10px - 1px);
+  //  }
+  //}
 }
