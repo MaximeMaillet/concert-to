@@ -21,7 +21,24 @@ async function like(req, res, next) {
   }
 }
 
+async function dislike(req, res, next) {
+  try {
+    const artist = await Artist.findOne({
+      where: {id: req.params.id},
+    });
+
+    if(artist) {
+      const user = await getUser(req);
+      user.removeLikes(artist);
+      res.send();
+    }
+  } catch(e) {
+    next(e);
+  }
+}
+
 module.exports = {
   get,
   like,
+  dislike,
 };

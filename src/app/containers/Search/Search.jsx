@@ -35,10 +35,19 @@ class Search extends Component {
   };
 
   handleLike = (artist) => {
-    console.log(artist);
     api.like({id: artist.id})
       .then(() => {
         toastr.success('Love Like 4ever', `Great love to ${artist.name}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  handleDislike = (artist) => {
+    api.dislike({id: artist.id})
+      .then(() => {
+        toastr.success('So sad ...', `Why dislike ${artist.name} ?`);
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +95,9 @@ class Search extends Component {
           />
           <SearchResults
             artists={this.state.artists}
+            likes={this.props.user.Likes.map((artist) => artist.id)}
             handleLike={this.handleLike}
+            handleDislike={this.handleDislike}
             onLoad={this.load}
             page={this.state.page}
           />

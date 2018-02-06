@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Card, CardBody, CardTitle, CardSubtitle} from 'reactstrap';
-import {Heart, Edit} from 'react-feather';
+import {Heart, Edit, ThumbsDown} from 'react-feather';
 import {ReactFlipCard, Back, Front} from '../FlipCard/FlipCard.jsx';
 import EventsList from '../EventsLists/EventsList.jsx';
 
@@ -20,13 +20,15 @@ export default class ArtistFlipCard extends Component {
   static defaultValues = {
     artist: {
       events: [],
-    }
+    },
+    isLike: false,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      isFlipped: false
+      isFlipped: false,
+      isLike: this.props.isLike
     };
   }
 
@@ -37,7 +39,13 @@ export default class ArtistFlipCard extends Component {
 
 
   handleLike = () => {
+    this.setState({isLike: !this.state.isLike});
     this.props.handleLike(this.props.artist);
+  };
+
+  handleDislike = () => {
+    this.setState({isLike: !this.state.isLike});
+    this.props.handleDislike(this.props.artist);
   };
 
   edit = () => {
@@ -53,7 +61,13 @@ export default class ArtistFlipCard extends Component {
               backgroundImage: `url(${this.props.artist.logo})`,
             }}>
               <div className="actions">
-                <button className="btn btn-transparent" type="button" onClick={this.handleLike}><Heart /></button>
+                {(this.state.isLike &&
+                  <button className="btn btn-transparent" type="button" onClick={this.handleDislike}><ThumbsDown /></button>
+                )
+                  ||
+                  <button className="btn btn-transparent" type="button" onClick={this.handleLike}><Heart /></button>
+                }
+
                 {/*<button className="btn btn-transparent" type="button" onClick={this.edit}><Edit /></button>*/}
               </div>
             </div>

@@ -1,14 +1,13 @@
-Next step :
+### Release 0.1.0
 
-### Release 0.0.1
-
-* [ ] Hook elasticsearch on likes
+* [x] Hook elasticsearch on likes
 * [ ] Hook elasticsearch after scrapping 
 * [ ] [Scrapper] Extract parameters.yml from Docker
-* [ ] Dislikes
+* [x] Dislikes
 
-### Dislikes
 
-* Front : add icon
-* Api : add endpoint
-* Elastic : exclude dislikes for user
+### Release 0.2.0
+
+* [ ] Ignore artist for not seeing artist in results
+* [ ] [Scrapper] get tickets site (ticketmaster, digitick)
+* [ ] [Scrapper] more artists for more site (infoconcert, facebook ?)

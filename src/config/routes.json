@@ -50,6 +50,12 @@
           "controller": "ArtistController#like",
           "errorHandler": "api"
         }
+      },
+      "/dislikes": {
+        "get": {
+          "controller": "ArtistController#dislike",
+          "errorHandler": "api"
+        }
       }
     }
   }

@@ -31,6 +31,11 @@ const routes = [
     name: 'like',
     route: '/artists/:id/likes',
     method: 'get'
+  },
+  {
+    name: 'dislike',
+    route: '/artists/:id/dislikes',
+    method: 'get'
   }
 ];
 

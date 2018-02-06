@@ -1,4 +1,4 @@
-'use strict';
+const model = require('../models/index');
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync();
 
@@ -77,9 +77,24 @@ module.exports = function(sequelize, DataTypes) {
     return bcrypt.compareSync(password, goodPassword);
   };
 
+  const ArtistLikes = sequelize.define('artist_likes', {
+
+  }, {
+    hooks: {
+      afterBulkCreate: (entity) => {
+        const elasticHook = require('../helpers/index').elasticHook;
+        elasticHook.addArtistLike(entity[0].dataValues.artistId, entity[0].dataValues.userId);
+      },
+      afterBulkDelete: (entity) => {
+        const elasticHook = require('../helpers/index').elasticHook;
+        elasticHook.removeArtistLike(entity.where.artistId[0], entity.where.userId);
+      }
+    }
+  });
+
   User.associate = (models) => {
     User.belongsToMany(models.artist, {
-      through: 'artist_likes',
+      through: ArtistLikes,
       as: 'Likes',
     });
   };

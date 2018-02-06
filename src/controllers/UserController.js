@@ -1,8 +1,9 @@
-'use strict';
+const helper = require('../helpers');
 
-module.exports.get = (req, res, next) => {
+module.exports.get = async(req, res, next) => {
   if(!req.session || !req.session.user) {
     return res.status(401).send();
   }
-  res.send(req.session.user);
+
+  res.send((await helper.getUser(req)));
 };
