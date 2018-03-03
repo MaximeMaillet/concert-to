@@ -1,4 +1,4 @@
-[ ] ### Release 0.1.0 - Alpha test 1
+### Release 0.1.0 - Alpha test 1
 
 * [x] Hook elasticsearch on likes
 * [ ] Hook elasticsearch after scrapping 
